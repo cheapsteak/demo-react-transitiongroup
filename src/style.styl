@@ -1,8 +1,80 @@
-body, html
-  margin 0
-  padding 1em
-  font 14px/1.4 'Helvetica Neue', Helvetica, Arial
-  color #333
+.image {
+  position: absolute;
+  height: 400px;
+  width: 400px;
+}
 
-@import 'components/repository'
-// @import 'bootstrap/dist/css/bootstrap.css'
+.little-thing {
+  width: 200px;
+  height: 200px;
+  background-color: rebeccapurple;
+}
+
+.example-enter {
+  opacity: 0.01;
+  transition: opacity .5s ease-in;
+}
+
+.example-enter.example-enter-active {
+  opacity: 1;
+}
+
+.example-leave {
+  opacity: 1;
+  transition: opacity .5s ease-in;
+}
+
+.example-leave.example-leave-active {
+  opacity: 0;
+}
+
+.link-active {
+  color: #bbbbbb;
+  text-decoration: none;
+}
+
+.Image {
+  position: absolute;
+  height: 400px;
+  width: 400px;
+}
+
+.swap-enter {
+  opacity: 0.01;
+  transform: translateX(5em);
+  transition: all .5s ease-in;
+}
+
+.swap-enter.swap-enter-active {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+.swap-leave {
+  opacity: 1;
+  transform: translateX(0);
+  transition: all .5s ease-in;
+}
+
+.swap-leave.swap-leave-active {
+  opacity: 0;
+  transform: translateX(-5em);
+}
+
+.example-enter {
+  opacity: 0.01;
+  transition: opacity .5s ease-in;
+}
+
+.example-enter.example-enter-active {
+  opacity: 1;
+}
+
+.example-leave {
+  opacity: 1;
+  transition: opacity .5s ease-in;
+}
+
+.example-leave.example-leave-active {
+  opacity: 0;
+}
