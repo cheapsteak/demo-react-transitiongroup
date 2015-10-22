@@ -19,7 +19,7 @@
     "domready": "^1.0.8",
     "gsap-promise": "^1.4.1",
     "lodash": "^3.9.1",
-    "vue": "^0.12.16",
+    "vue": "vuejs/vue#dev",
     "vue-router": "^0.7.4"
   },
   "devDependencies": {

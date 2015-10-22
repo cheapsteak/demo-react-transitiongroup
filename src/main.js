@@ -15,7 +15,7 @@ Vue.transition('animate-in-out', {
   },
 
   beforeLeave (el) {
-    console.log(this.$.littlething);
+    console.log(this.$refs.littlething);
   },
   leave: function (el, done) {
     if (this.animateOut) {
@@ -30,7 +30,7 @@ const App = {
   template: `
     <a v-link="{path: 'page1'}">Page 1</a>
     <a v-link="{path: 'page2'}">Page 2</a>
-    <router-view v-transition="animate-in-out"></router-view>
+    <router-view transition="animate-in-out"></router-view>
   `,
   replace: false
 }
@@ -97,7 +97,7 @@ const Page2 = {
     <div class="image">
       <h1>Page 2</h1>
 
-      <little-thing v-ref="littlething" v-transition="animate-in-out"></little-thing>
+      <little-thing v-ref:littlething transition="animate-in-out"></little-thing>
 
       <p>Consectetur adipisicing elit, sed do <a v-link="'/page2'">a link to page 2 should also be active</a> eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
     </div>
@@ -116,11 +116,12 @@ const Page2 = {
   methods: {
     animateIn () {
       return Promise.all([
-        this.$.littlething.animateIn(),
+        this.$refs.littlething.animateIn(),
         animate.fromTo(this.$el, 0.5, this.animationStates.initial, this.animationStates.default)])
     },
 
     animateOut () {
+      this.$refs.littlething.animateOut();
       return animate.to(this.$el, 0.5, this.animationStates.out)
     }
   },
