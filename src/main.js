@@ -14,9 +14,6 @@ Vue.transition('animate-in-out', {
     }
   },
 
-  beforeLeave (el) {
-    console.log(this.$refs.littlething);
-  },
   leave: function (el, done) {
     if (this.animateOut) {
       this.animateOut().then(done)
@@ -43,7 +40,7 @@ const Page1 = {
   template: `
     <div class="image">
       <h1>Page 1</h1>
-      <p><a v-link="'/page1'" activeClassName="link-active">A link to page 1 should be active</a>. Lorem ipsum dolor sit amet, consectetur adipisicing elit. <a v-link="'/page2'" activeClassName="link-active">A link to page 2 should be inactive</a>. Do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+      <p><a v-link="{path: '/page1', activeClass: 'link-active'}">A link to page 1 should be active</a>. Lorem ipsum dolor sit amet, consectetur adipisicing elit. <a v-link="{path: '/page2', activeClass: 'link-active'}">A link to page 2 should be inactive</a>. Do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
     </div>
   `,
 
@@ -76,7 +73,7 @@ const LittleThing = {
       animationStates: {
         initial: {xPercent: 400, rotationZ: 180, opacity: 0},
         default: {xPercent: 0, rotationZ: 0, opacity: 1},
-        out: {xPercent: -400, rotationZ: -180, opacity: 0}
+        out: {xPercent: -200, rotationZ: -180, opacity: 0}
       }
     };
   },
@@ -99,9 +96,19 @@ const Page2 = {
 
       <little-thing v-ref:littlething transition="animate-in-out"></little-thing>
 
-      <p>Consectetur adipisicing elit, sed do <a v-link="'/page2'">a link to page 2 should also be active</a> eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+      <p>Consectetur adipisicing elit, sed do <a v-link="{path: '/page2', activeClass: 'link-active'}">a link to page 2 should also be active</a> eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
     </div>
   `,
+
+  route: {
+    // animations for sub-components go here
+    activate () {
+      this.$refs.littlething.animateIn();
+    },
+    deactivate ({next}) {
+      this.$refs.littlething.animateOut().then(next);
+    }
+  },
 
   data () {
     return {
@@ -115,13 +122,10 @@ const Page2 = {
 
   methods: {
     animateIn () {
-      return Promise.all([
-        this.$refs.littlething.animateIn(),
-        animate.fromTo(this.$el, 0.5, this.animationStates.initial, this.animationStates.default)])
+      return animate.fromTo(this.$el, 0.5, this.animationStates.initial, this.animationStates.default)
     },
 
     animateOut () {
-      this.$refs.littlething.animateOut();
       return animate.to(this.$el, 0.5, this.animationStates.out)
     }
   },
