@@ -97,8 +97,10 @@ class Page2 extends React.Component {
   }
 
   animateOut () {
-    this.refs.littleThing.animateOut()
-    return animate.to(findDOMNode(this), 0.5, this.animationStates.out)
+    return this.refs.littleThing.animateOut()
+      .then(() => {
+        animate.to(findDOMNode(this), 0.5, this.animationStates.out)
+      })
   }
 
   componentWillAppear(callback) {
