@@ -144,7 +144,7 @@ class LittleThing extends React.Component {
 }
 
 render((
-  <Router>
+  <Router history={history}>
     <Route path="/" component={App}>
       <Route path="page1" component={Page1} />
       <Route path="page2" component={Page2} />
